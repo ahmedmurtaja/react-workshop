@@ -1,6 +1,6 @@
 import { useState } from "react";
 
-const ExerciseTwo = () => {
+function ExerciseTwo() {
   const [color, setColor] = useState("#f44336");
 
   const colors = [
@@ -14,20 +14,24 @@ const ExerciseTwo = () => {
     "#009688",
     "#4caf50",
   ];
-  const colorsBtns = colors.map((color) => (
+
+  const handleColorChange = (newColor) => setColor(newColor);
+
+  const colorButtons = colors.map((color) => (
     <span
+      key={color}
       className="color"
       style={{ backgroundColor: color }}
-      onClick={() => setColor((prevColor) => (prevColor = color))}
+      onClick={() => handleColorChange(color)}
     ></span>
   ));
 
   return (
     <div className="palette-color">
       <div className="palette" style={{ backgroundColor: color }}></div>
-      <div className="colors">{colorsBtns}</div>
+      <div className="colors">{colorButtons}</div>
     </div>
   );
-};
+}
 
 export default ExerciseTwo;

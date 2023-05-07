@@ -1,22 +1,20 @@
 import { useState } from "react";
 
-const ExerciseOne = () => {
+function ExerciseOne() {
   const [counter, setCounter] = useState(0);
+
+  const handleIncrement = () => setCounter(prevCounter => prevCounter + 1);
+  const handleReset = () => setCounter(0);
+  const handleDecrement = () => setCounter(prevCounter => prevCounter - 1);
 
   return (
     <div className="counter">
       <span>{counter}</span>
-      <button onClick={() => setCounter((prevCounter) => prevCounter + 1)}>
-        +
-      </button>
-      <button onClick={() => setCounter((prevCounter) => (prevCounter = 0))}>
-        Reset
-      </button>
-      <button onClick={() => setCounter((prevCounter) => prevCounter - 1)}>
-        -
-      </button>
+      <button onClick={handleIncrement}>+</button>
+      <button onClick={handleReset}>Reset</button>
+      <button onClick={handleDecrement}>-</button>
     </div>
   );
-};
+}
 
 export default ExerciseOne;

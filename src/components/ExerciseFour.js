@@ -1,78 +1,78 @@
 import { useState } from "react";
 
 const ExerciseFour = () => {
-  const initialFormData = {
+  const [formData, setFormData] = useState({
     email: "",
     password: "",
     confirmPassword: "",
-  };
+  });
 
-  const [formData, setFormData] = useState(initialFormData);
   const [errorMessage, setErrorMessage] = useState("");
   const [showUserData, setShowUserData] = useState(false);
 
-  const handleFormData = (e) => {
-    const { name, value } = e.target;
-
-    setFormData((prevFormData) => ({
-      ...prevFormData,
-      [name]: value,
-    }));
+  const handleInputChange = (event) => {
+    const { name, value } = event.target;
+    setFormData((prevFormData) => ({ ...prevFormData, [name]: value }));
   };
 
-  function handleSubmit(e) {
-    e.preventDefault();
-    if (!formData.email || !formData.password || !formData.confirmPassword) {
-      setErrorMessage("Fill All Fields *");
+  const handleSubmit = (event) => {
+    event.preventDefault();
+    if (
+      !formData.email.trim() ||
+      !formData.password.trim() ||
+      !formData.confirmPassword.trim()
+    ) {
+      setErrorMessage("Fill all fields *");
       return;
     }
+
     if (formData.password !== formData.confirmPassword) {
-      setErrorMessage("Passwords Must Match *");
+      setErrorMessage("Passwords must match *");
       return;
     }
 
     setErrorMessage("");
     setShowUserData(true);
-  }
+  };
 
-  const deleteUser = () => {
-    setFormData(initialFormData);
+  const handleDeleteUser = () => {
+    setFormData({ email: "", password: "", confirmPassword: "" });
     setErrorMessage("");
     setShowUserData(false);
   };
 
   return (
     <div className="signup">
-      <form>
+      <form onSubmit={handleSubmit}>
         <input
           type="email"
           name="email"
           value={formData.email}
-          onChange={handleFormData}
-          placeholder="Enter Your Email"
+          onChange={handleInputChange}
+          placeholder="Enter your email"
         />
         <input
           type="password"
           name="password"
           value={formData.password}
-          onChange={handleFormData}
-          placeholder="Enter Your Password"
+          onChange={handleInputChange}
+          placeholder="Enter your password"
         />
         <input
           type="password"
           name="confirmPassword"
           value={formData.confirmPassword}
-          onChange={handleFormData}
-          placeholder="Confirm Password"
+          onChange={handleInputChange}
+          placeholder="Confirm password"
         />
         <p className="error">{errorMessage}</p>
-        <button onClick={handleSubmit}>Submit</button>
+        <button type="submit">Submit</button>
       </form>
       {showUserData && (
         <div className="user-data">
           <span>{formData.email}</span>
           <span>{formData.password}</span>
-          <button onClick={deleteUser}>delete</button>
+          <button onClick={handleDeleteUser}>Delete</button>
         </div>
       )}
     </div>

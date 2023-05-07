@@ -1,28 +1,26 @@
 import { useState } from "react";
 
-const ExerciseThree = () => {
+function ExerciseThree() {
   const [taskDescription, setTaskDescription] = useState("");
   const [tasks, setTasks] = useState([]);
 
-  const addTask = () => {
+  const handleAddTask = () => {
     setTasks((prevTasks) => [
       ...prevTasks,
-      { id: tasks.length + 1, description: taskDescription },
+      { id: prevTasks.length + 1, description: taskDescription },
     ]);
-
     setTaskDescription("");
   };
 
-  const deleteTask = (taskId) => {
-    const newTasks = tasks.filter((task) => task.id !== taskId);
-    setTasks(newTasks);
+  const handleDeleteTask = (taskId) => {
+    setTasks((prevTasks) => prevTasks.filter((task) => task.id !== taskId));
   };
 
-  const tasksElements = tasks.map((task) => (
+  const taskItems = tasks.map((task) => (
     <div key={task.id} className="task">
       <span>{task.id}</span>
       <span>{task.description}</span>
-      <button onClick={() => deleteTask(task.id)}>delete</button>
+      <button onClick={() => handleDeleteTask(task.id)}>Delete</button>
     </div>
   ));
 
@@ -35,11 +33,11 @@ const ExerciseThree = () => {
           onChange={(e) => setTaskDescription(e.target.value)}
           placeholder="Write your task"
         />
-        <button onClick={addTask}>Add</button>
+        <button onClick={handleAddTask}>Add</button>
       </div>
-      <div className="tasks">{tasksElements}</div>
+      <div className="tasks">{taskItems}</div>
     </>
   );
-};
+}
 
 export default ExerciseThree;
